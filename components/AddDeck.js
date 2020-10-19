@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity, Keyboard } from 'r
 import { connect } from 'react-redux'
 import { CommonActions } from '@react-navigation/native';
 
+import { saveDeckTitle } from '../utils/api'
 import { addDeck } from '../actions'
 
 class AddDeck extends Component {
@@ -19,19 +20,26 @@ class AddDeck extends Component {
 
   createDeck = () => {
     const { dispatch } = this.props
+    const { value } = this.state
 
     Keyboard.dismiss()
+    // update store
     dispatch(addDeck({
-      [this.state.value]: {
-        title: this.state.value,
+      [value]: {
+        title: value,
         questions: []
       }
     }))
 
+    // reset state
     this.setState(() => ({
       value: ''
     }))
 
+    // update AsyncStorage
+    saveDeckTitle(value)
+
+    // back home page
     this.toHome()
   }
 
@@ -56,6 +64,7 @@ class AddDeck extends Component {
       <View style={styles.container}>
         <Text>What is the title of your new deck</Text>
         <TextInput
+          value={this.state.value}
           style={{ height: 40, width: 80, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(text) => this.handleOnChange(text)}
           />

@@ -2,6 +2,7 @@ import {
   RECEIVE_DECKS,
   ADD_DECK,
   ADD_CARD,
+  REMOVE_DECK,
  } from '../actions/index'
 
 function decks (state = {}, action) {
@@ -28,6 +29,16 @@ function decks (state = {}, action) {
           ...state[action.currDeck],
           questions: newQuestins,
         },
+      }
+
+    case REMOVE_DECK:
+      const newState = state
+      newState[action.targetDeckTitle] = undefined
+      delete newState[action.targetDeckTitle]
+
+      return{
+        ...state,
+        ...newState,
       }
 
     default:

@@ -17,12 +17,12 @@ class DeckList extends Component {
   }
 
   render() {
-    const { decks } = this.props
+    const { decks, sortedDecksTitle } = this.props
 
     return (
       <View style={styles.container}>
         {
-          Object.keys(decks).map(key => (
+          sortedDecksTitle.map(key => (
             <TouchableOpacity key={key}
               onPress={() => this.props.navigation.navigate(
                 'AddCardNav',
@@ -33,6 +33,7 @@ class DeckList extends Component {
               )}
               >
               <Text>{key}</Text>
+              <Text>{decks[key].questions.length}</Text>
             </TouchableOpacity>
           ))
         }
@@ -51,9 +52,12 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(decks) {
-  console.log('Decks---------------------------------------------------', decks)
+  // console.log('Decks---------------------------------------------------', decks)
+  const sortedDecksTitle = Object.keys(decks).sort()
+  // console.log(sortedDecksTitle)
   return {
-    decks: decks
+    decks: decks,
+    sortedDecksTitle: sortedDecksTitle,
   }
 }
 

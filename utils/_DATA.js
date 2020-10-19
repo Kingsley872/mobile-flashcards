@@ -1,7 +1,7 @@
-import { AsyncStorage } from 'react-native'
+// import { AsyncStorage } from 'react-native'
 
 export const DECK_STORAGE_KEY = 'moblieFlash:data'
-export const initData = {
+export const INIT_DATA = {
   React: {
     title: 'React',
     questions: [
@@ -26,8 +26,8 @@ export const initData = {
   }
 }
 
-export function getDecks () {
-  console.log(JSON.parse(async () => await AsyncStorage.getItem(DATA_STORAGE_KEY)))
+// export function getDecks () {
+//   console.log(JSON.parse(async () => await AsyncStorage.getItem(DATA_STORAGE_KEY)))
   // AsyncStorage.clear();
   // AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(initData))
   // return AsyncStorage.getItem(DECK_STORAGE_KEY)
@@ -46,17 +46,17 @@ export function getDecks () {
   //         })
 // }
 
-function getDeck () {
-
-}
-
-function saveDeckTitle () {
-
-}
-
-function addCardToDeck () {
-
-}
+// function getDeck () {
+//
+// }
+//
+// function saveDeckTitle () {
+//
+// }
+//
+// function addCardToDeck () {
+//
+// }
 
 // function initDecks () {
 //   AsyncStorage.setItem(
@@ -73,4 +73,4 @@ function addCardToDeck () {
 //   } else {
 //     return JSON.parse(results)
 //   }
-}
+// }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
-import { addCard } from '../actions'
 import { CommonActions } from '@react-navigation/native';
+
+import { addCard } from '../actions'
+import { addCardToDeck } from '../utils/api'
 
 class AddCard extends Component {
   state = {
@@ -25,21 +27,29 @@ class AddCard extends Component {
   createCard = () => {
     const { dispatch, currDeck } = this.props
     const { questionText, answerText } = this.state
+    const newCard = {
+      question: questionText,
+      answer: answerText,
+    }
 
     Keyboard.dismiss()
 
+    // update redux
     dispatch(addCard(
-      questionText,
-      answerText,
       currDeck,
+      newCard,
     ))
 
+    // reset state
     this.setState(() => ({
       questionText: '',
       answerText: '',
     }))
 
+    // update AsyncStorage
+    addCardToDeck(currDeck, newCard)
 
+    // back to deck
     this.toDeck()
   }
 
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(decks, { route }) {
   const { currDeck } = route.params
-  console.log('addcard ----------------------------', decks[currDeck].questions)
+  // console.log('addcard ----------------------------', decks[currDeck].questions)
   return {
     currDeck: currDeck,
     decks: decks,

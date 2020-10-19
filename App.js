@@ -16,6 +16,7 @@ import AddDeck from './components/AddDeck'
 import Deck from './components/Deck'
 import reducer from "./reducers"
 import AddCard from './components/AddCard'
+import Cards from './components/Cards'
 
 function AppStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -79,6 +80,10 @@ const AddCardNav = () => (
     <NestedStack.Screen
       name="AddCard"
       component={AddCard}
+      />
+    <NestedStack.Screen
+      name="Quiz"
+      component={Cards}
       />
   </NestedStack.Navigator>
 )
