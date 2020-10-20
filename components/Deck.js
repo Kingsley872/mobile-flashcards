@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
+
 import Cards from './Cards'
 import { removeDeck } from '../utils/api'
 import { removeDeckFromRedux } from '../actions/index'
-
+import { grey, lightcyan, deepskyblue, lightGreen, darkOrange, red } from '../utils/colors'
+import AppButton from './AppButton'
+import SubTop from './SubTop'
 
 class Deck extends Component {
 
@@ -27,53 +30,55 @@ class Deck extends Component {
     )
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return nextState !== null
+  shouldComponentUpdate (nextProps) {
+    return nextProps.deck !== undefined
   }
 
   render() {
 
     const { deckName, deck } = this.props
     const numOfCards = deck.questions.length
+    const textOne = 'Deck Name: ' + deck.title
+    const textTwo = 'Number of flash cards: [' + numOfCards + ']'
 
     return (
       <View style={styles.container}>
-        <Text>{deck.title}</Text>
-        <Text>{numOfCards}</Text>
-        <TouchableOpacity
+        <SubTop
+          textOne={textOne}
+          textTwo={textTwo}
+          />
+
+        <AppButton
+          title={'Add a Card'}
           onPress={() => this.props.navigation.push(
             "AddCard",
             {currDeck: deckName}
           )}
-          >
-          <Text>
-            AddCard
-          </Text>
-        </TouchableOpacity>
+          color={deepskyblue}
+        />
 
-        <TouchableOpacity
+        <AppButton
+          title={'Start Quiz'}
           onPress={() => this.props.navigation.push(
             "Quiz",
             {currDeck: deckName}
           )}
           disabled={numOfCards === 0}
-          >
-          <Text>
-            Start Quiz
-          </Text>
-          {
-            numOfCards === 0
-              ? <Text>Need at least one card to start quiz</Text>
-              : null
-          }
-        </TouchableOpacity>
+          color={lightGreen}
+        />
+        {
+          numOfCards === 0
+            ? <Text style={styles.warningText}>
+                Need at least one card to start quiz
+              </Text>
+            : null
+        }
 
-        <TouchableOpacity
-          onPress={this.handleDeleteDeck} >
-          <Text>
-            Delete Deck
-          </Text>
-        </TouchableOpacity>
+        <AppButton
+          title={'Delete Deck'}
+          onPress={this.handleDeleteDeck}
+          color={darkOrange}
+        />
       </View>
     )
   }
@@ -83,9 +88,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  warningText: {
+    alignSelf: 'center',
+    color: red,
+    fontSize: 12,
+  }
 });
 
 function mapStateToProps(decks, { route, navigation }) {

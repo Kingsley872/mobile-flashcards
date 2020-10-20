@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
+
+import { whiteSmoke, deepskyblue, lightGreen, darkOrange } from '../utils/colors'
+import SubTop from './SubTop'
+import AppButton from './AppButton'
 
 class Cards extends Component {
   state = {
@@ -25,12 +29,6 @@ class Cards extends Component {
     }))
   }
 
-  // recordResult = (result) => {
-  //   this.setState((prevState) => ({
-  //     numOfcorrect: prevState.numOfcorrect + parseInt(result)
-  //   }))
-  // }
-
   handleShowAnswer = () => {
     this.setState(() => ({
       showAnswer: true,
@@ -50,6 +48,8 @@ class Cards extends Component {
     }))
   }
 
+    return
+
   render() {
     const { currDeck, decks } = this.props
     const questions = decks[currDeck].questions
@@ -57,45 +57,65 @@ class Cards extends Component {
 
     const { index, numOfcorrect, showAnswer } = this.state
 
+    const textOne = 'Quiz Time'
+    const textTwo = `${index+1} / ${len}`
+
     if(index < len) {
       return (
         <View style={styles.container}>
-          <Text>INDEX: </Text>
-          <Text>{index+1} / {len}</Text>
-          <Text>QUSTIONS: </Text>
-          <Text>{questions[index].question}</Text>
-          <TouchableOpacity onPress={this.handleShowAnswer}>
-            <Text>
-              SHOW ANSWER
-            </Text>
-          </TouchableOpacity>
+          <SubTop
+            textOne={textOne}
+            textTwo={textTwo}
+            />
+          <View style={styles.questionBoard}>
+            <Text>QUSTIONS: </Text>
+            <Text>{questions[index].question}</Text>
+          </View>
+
           { showAnswer
-            ? (<View>
-                <Text>ANSWER: </Text>
-                <Text>{questions[index].answer}</Text>
-                <TouchableOpacity onPress={() => this.handleCorrectAnswer()}>
-                  <Text>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.handleWrongAnswer()}>
-                  <Text>Incorrect</Text>
-                </TouchableOpacity>
+            ?(<View>
+                <View style={styles.questionBoard}>
+                  <Text>ANSWER: </Text>
+                  <Text>{questions[index].answer}</Text>
+                </View>
+                <AppButton
+                  title='CORRECT'
+                  onPress={() => this.handleCorrectAnswer()}
+                  color={lightGreen}
+                  />
+                <AppButton
+                  title='INCORRECT'
+                  onPress={() => this.handleWrongAnswer()}
+                  color={darkOrange}
+                  />
               </View>)
-            : null
+            : (<View>
+                <AppButton
+                  title='SHOW ANSWER'
+                  onPress={this.handleShowAnswer}
+                  color={deepskyblue}
+                  />
+              </View>)
           }
         </View>
       )
     } else {
       return (
         <View style={styles.container}>
-          <Text>END OF Quiz</Text>
-          <Text>RESULT: </Text>
-          <Text>{numOfcorrect} / {len}</Text>
-          <TouchableOpacity onPress={this.resetQuiz}>
-            <Text>RESTART QUIZ</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.toDeck}>
-            <Text>RETRUN TO DECK</Text>
-          </TouchableOpacity>
+          <SubTop
+            textOne='End of Quiz'
+            textTwo={`Result: ${numOfcorrect} / ${len} --> ${((numOfcorrect / len) * 100).toFixed(0)}%`}
+            />
+          <AppButton
+            title='RESTART QUIZ'
+            onPress={this.resetQuiz}
+            color={deepskyblue}
+            />
+          <AppButton
+            title='RETRUN TO DECK'
+            onPress={this.toDeck}
+            color={darkOrange}
+            />
         </View>
       )
     }
@@ -106,7 +126,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+  },
+  questionBoard: {
+    backgroundColor: whiteSmoke,
+    padding: 20,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    justifyContent: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    borderRadius: 10,
   },
 });
 

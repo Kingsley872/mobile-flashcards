@@ -1,22 +1,13 @@
 import { AsyncStorage } from 'react-native'
 import { DECK_STORAGE_KEY, INIT_DATA } from './_DATA'
 
-// export function fetchDecksData () {
-//   return AsyncStorage.getItem(DECK_STORAGE_KEY)
-//           .then((data) => {
-//             if(data === null) {
-//               handleNoData()
-//             }
-//           })
-// }
-
 const setInitData = () => {
   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(INIT_DATA))
   return INIT_DATA
 }
 
 export const getDecks = () => {
-  // AsyncStorage.clear()
+  AsyncStorage.clear()
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
     .then( data => (
       data? JSON.parse(data):setInitData()

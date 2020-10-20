@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { CommonActions } from '@react-navigation/native';
+import { deepskyblue } from '../utils/colors'
 
 import { saveDeckTitle } from '../utils/api'
 import { addDeck } from '../actions'
+import AppButton from './AppButton'
+import AppTextInput from './AppTextInput'
 
 class AddDeck extends Component {
   state = {
@@ -62,18 +65,17 @@ class AddDeck extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>What is the title of your new deck</Text>
-        <TextInput
+        <Text style={styles.topText}>What is the title of your new deck</Text>
+
+        <AppTextInput
           value={this.state.value}
-          style={{ height: 40, width: 80, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(text) => this.handleOnChange(text)}
           />
-        <TouchableOpacity
+        <AppButton
+          title="Create a deck"
           onPress={this.createDeck}
-          disabled={this.state.value === ''}
-          >
-          <Text>Create a Deck</Text>
-        </TouchableOpacity>
+          color={deepskyblue}
+        />
       </View>
     )
   }
@@ -83,8 +85,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  topText: {
+    fontSize: 22,
+    marginTop: 20,
+    textAlign: 'center'
   },
 });
 

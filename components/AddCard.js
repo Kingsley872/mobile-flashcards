@@ -5,6 +5,10 @@ import { CommonActions } from '@react-navigation/native';
 
 import { addCard } from '../actions'
 import { addCardToDeck } from '../utils/api'
+import AppTextInput from './AppTextInput'
+import AppButton from './AppButton'
+import SubTop from './SubTop'
+import { deepskyblue } from '../utils/colors'
 
 class AddCard extends Component {
   state = {
@@ -54,34 +58,33 @@ class AddCard extends Component {
   }
 
   toDeck = () => {
-    // this.props.navigation.dispatch(
-    //   CommonActions.goBack({
-    //     key: 'Deck'
-    //   })
-    // )
     this.props.navigation.pop()
   }
 
   render() {
+    const { currDeck } = this.props
     return (
       <View style={styles.container}>
-        <Text>Under {this.props.currDeck} deck</Text>
-        <TextInput
-          placeholder="Question"
-          style={{ height: 40, width: 80, borderColor: 'gray', borderWidth: 1}}
+        <SubTop
+          textOne='Add an New Card'
+          textTwo={`Under deck name: ${currDeck}`}
+          />
+        <AppTextInput
+          placeholder='Question'
           onChangeText={(text) => this.handleQestionOnChange(text)}
           />
-        <TextInput
-          placeholder="Answer"
-          style={{ height: 40, width: 80, borderColor: 'gray', borderWidth: 1}}
+        <AppTextInput
+          placeholder='Answer'
           onChangeText={(text) => this.handleAnswerOnChange(text)}
           />
-        <TouchableOpacity
+
+        <AppButton
+          title='CREATE A CARD'
           onPress={this.createCard}
           disabled={this.state.questionText === '' || this.state.answerText === ''}
-          >
-          <Text>Create a new card</Text>
-        </TouchableOpacity>
+          color={deepskyblue}
+          />
+
       </View>
     )
   }
@@ -91,7 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
   },
 });
 

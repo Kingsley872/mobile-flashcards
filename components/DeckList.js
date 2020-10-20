@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-// import { getDecks, initDecks } from '../utils/_DATA'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
-// import Deck from './Deck'
+import { grey, white, lightseagreen, dimGray, deepskyblue, lightcyan } from '../utils/colors'
 
 class DeckList extends Component {
 
@@ -18,12 +18,21 @@ class DeckList extends Component {
 
   render() {
     const { decks, sortedDecksTitle } = this.props
+    const numOfDecks = Object.keys(decks).length
 
     return (
       <View style={styles.container}>
+        <View style={styles.top}>
+          <Text style={styles.topText}>Mobile</Text>
+          <Text style={styles.topText}>Flash Cards</Text>
+        </View>
+          <Text style={styles.numOfDecksText}>{numOfDecks} Decks</Text>
+        <ScrollView>
         {
           sortedDecksTitle.map(key => (
-            <TouchableOpacity key={key}
+            <TouchableOpacity
+              style={[styles.top, { backgroundColor: lightcyan }, { height: 100}]}
+              key={key}
               onPress={() => this.props.navigation.navigate(
                 'AddCardNav',
                 {
@@ -32,11 +41,11 @@ class DeckList extends Component {
                 }
               )}
               >
-              <Text>{key}</Text>
-              <Text>{decks[key].questions.length}</Text>
+              <Text style={styles.deckText}>{key} ({decks[key].questions.length} flash-cards)</Text>
             </TouchableOpacity>
           ))
         }
+      </ScrollView>
       </View>
     )
   }
@@ -46,15 +55,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  top: {
+    backgroundColor: deepskyblue,
+    height: 150,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    justifyContent: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    borderRadius: 10,
+  },
+  numOfDecksText: {
+    fontSize: 14,
+    marginTop:8,
+    marginLeft: 20,
+    marginBottom: 8,
+  },
+  topText: {
+    fontSize: 22,
+    color: white,
+    textAlign: 'center'
+  },
+  deckText: {
+    fontSize: 18,
+    color: grey,
+    marginLeft: 20,
+  }
 });
 
 function mapStateToProps(decks) {
-  // console.log('Decks---------------------------------------------------', decks)
   const sortedDecksTitle = Object.keys(decks).sort()
-  // console.log(sortedDecksTitle)
   return {
     decks: decks,
     sortedDecksTitle: sortedDecksTitle,
