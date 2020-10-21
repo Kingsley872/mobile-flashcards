@@ -1,6 +1,8 @@
-// import { AsyncStorage } from 'react-native'
+// constants for this flash card 
 
 export const DECK_STORAGE_KEY = 'moblieFlash:data'
+export const NOTIFICATION_KEY = 'moblieFlash:notifications'
+
 export const INIT_DATA = {
   React: {
     title: 'React',

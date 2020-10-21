@@ -11,7 +11,6 @@ class Cards extends Component {
     index: 0,
     numOfcorrect: 0,
     showAnswer: false,
-    toDeck: false,
   }
 
   handleCorrectAnswer = () => {
@@ -44,7 +43,6 @@ class Cards extends Component {
       index: 0,
       numOfcorrect: 0,
       showAnswer: false,
-      toDeck: false,
     }))
   }
 

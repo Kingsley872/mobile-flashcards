@@ -6,9 +6,10 @@ import { CommonActions } from '@react-navigation/native'
 import Cards from './Cards'
 import { removeDeck } from '../utils/api'
 import { removeDeckFromRedux } from '../actions/index'
-import { grey, lightcyan, deepskyblue, lightGreen, darkOrange, red } from '../utils/colors'
+import { lightcyan, deepskyblue, lightGreen, darkOrange, red } from '../utils/colors'
 import AppButton from './AppButton'
 import SubTop from './SubTop'
+import { clearLocalNotification, setLocalNotification } from '../utils/api'
 
 class Deck extends Component {
 
@@ -34,6 +35,18 @@ class Deck extends Component {
     return nextProps.deck !== undefined
   }
 
+  handleStartQuiz = () => {
+    this.props.navigation.push(
+      "AddCard",
+      {currDeck: this.props.deckName}
+    )
+
+    // clear notification
+    clearLocalNotification()
+      .then(setLocalNotification())
+  }
+
+
   render() {
 
     const { deckName, deck } = this.props
@@ -50,10 +63,7 @@ class Deck extends Component {
 
         <AppButton
           title={'Add a Card'}
-          onPress={() => this.props.navigation.push(
-            "AddCard",
-            {currDeck: deckName}
-          )}
+          onPress={this.handleStartQuiz}
           color={deepskyblue}
         />
 
@@ -98,7 +108,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(decks, { route, navigation }) {
   const { deckName } = route.params
-  // console.log('deck------------------------------------------', decks[deckName])
   return {
     deckName: deckName,
     deck: decks[deckName]

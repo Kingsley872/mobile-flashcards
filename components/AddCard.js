@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(decks, { route }) {
   const { currDeck } = route.params
-  // console.log('addcard ----------------------------', decks[currDeck].questions)
   return {
     currDeck: currDeck,
     decks: decks,

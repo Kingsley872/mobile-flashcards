@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
-import { grey, white, lightseagreen, dimGray, deepskyblue, lightcyan } from '../utils/colors'
+import { grey, white, lightseagreen, deepskyblue, lightcyan } from '../utils/colors'
 
 class DeckList extends Component {
 
@@ -28,24 +28,24 @@ class DeckList extends Component {
         </View>
           <Text style={styles.numOfDecksText}>{numOfDecks} Decks</Text>
         <ScrollView>
-        {
-          sortedDecksTitle.map(key => (
-            <TouchableOpacity
-              style={[styles.top, { backgroundColor: lightcyan }, { height: 100}]}
-              key={key}
-              onPress={() => this.props.navigation.navigate(
-                'AddCardNav',
-                {
-                  screen: 'Deck',
-                  params: { deckName: key },
-                }
-              )}
-              >
-              <Text style={styles.deckText}>{key} ({decks[key].questions.length} flash-cards)</Text>
-            </TouchableOpacity>
-          ))
-        }
-      </ScrollView>
+          {
+            sortedDecksTitle.map(key => (
+              <TouchableOpacity
+                style={[styles.top, { backgroundColor: lightcyan }, { height: 100}]}
+                key={key}
+                onPress={() => this.props.navigation.navigate(
+                  'AddCardNav',
+                  {
+                    screen: 'Deck',
+                    params: { deckName: key },
+                  }
+                )}
+                >
+                <Text style={styles.deckText}>{key} ({decks[key].questions.length} flash-cards)</Text>
+              </TouchableOpacity>
+            ))
+          }
+        </ScrollView>
       </View>
     )
   }

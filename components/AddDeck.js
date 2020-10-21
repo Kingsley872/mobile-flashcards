@@ -63,12 +63,14 @@ class AddDeck extends Component {
       )
     }
 
+    const { value } = this.state
+
     return (
       <View style={styles.container}>
         <Text style={styles.topText}>What is the title of your new deck</Text>
 
         <AppTextInput
-          value={this.state.value}
+          value={value}
           onChangeText={(text) => this.handleOnChange(text)}
           />
         <AppButton

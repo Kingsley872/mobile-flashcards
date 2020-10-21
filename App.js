@@ -10,7 +10,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack"
+// import * as Permissions from 'expo-permissions'
+import * as Notifications from "expo-notifications"
 
+import { setLocalNotification } from './utils/api'
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 import Deck from './components/Deck'
@@ -103,8 +106,15 @@ const MainNav = () => (
   </RootStack.Navigator>
 )
 
+// This function is for testing 
+// async function scheduleAndCancel() {
+//   await Notifications.cancelScheduledNotificationAsync('9beb4aa9-38f1-4aa0-8da3-606782bac169')
+// }
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
 
   render() {
     return (
