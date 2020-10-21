@@ -1,8 +1,8 @@
 # React native project - Mobile Flashcards
 
-## "Flashcards" is a mobile application (Android or iOS - or both) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
+# "Flashcards" is a mobile application (Android or iOS - or both) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
 
-## ![home](./demo/home.png)
+![home](./demo/home.png) ![deck](./demo/deck.png) ![adddeck](./demo/adddeck.png) ![addcard](./demo/addcard.png) ![quiz](./demo/quiz.png) ![donequiz](./demo/donequiz.png)
 
 # Library and Tools
 
